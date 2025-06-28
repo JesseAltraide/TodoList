@@ -18,7 +18,7 @@ def add_tasks():
     tasks.append(new_task)
     return new_task, 201
 
-@app.get("/tasks/<int:t_id>/delete")
+@app.get("/tasks/delete/<int:t_id>")
 def delete_task(t_id):
     task = get_current_task(t_id)
     if task is None:
@@ -26,7 +26,7 @@ def delete_task(t_id):
     tasks.remove(task)
     return {"message": "Task has been deleted"}, 201
 
-@app.post("/task/<int: task_id>/edit")
+@app.post("/task/edit/<int:task_id>")
 def edit_task(task_id):
     task = get_current_task(task_id)
     if task == None:
