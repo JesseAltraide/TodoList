@@ -7,42 +7,9 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
-    <style>
-        body{
-            font-family: 'Times New Roman', Times, serif;
-            background-color: white;
-        }
-        h1, h2{
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <h1>Todo List</h1>
-    <form action="{{url_for('home')}}">
-        <input type="text" placeholder="Enter Todo" id="input-todo" name="todo_name">
-        <button id="add-todo">+</button>
-    </form>
     <h2>Todos</h2>
-    <div class="todo-container">
-        <div class="todo">
-            <p>Write Python</p>
-            <div class="actions">
-                <input type="checkbox">
-                <form action="">
-                    <button>Delete</button>
-                </form>
-            </div>
-        </div>
-        <div class="todo">
-            <p>Practice Docker</p>
-            <div class="actions">
-                <input type="checkbox">
-                <form action="">
-                    <button>Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
