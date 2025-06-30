@@ -1,5 +1,7 @@
-from flask import Blueprint, request, jsonify, render_template
-from task import tasks, get_current_task
+# codeium-disable-supercomplete
+from flask import Blueprint, request, render_template
+from .task import Task
+from . import db
 
 main = Blueprint("main", __name__)
 
@@ -10,32 +12,44 @@ def index():
 
 @main.get("/tasks")
 def get_current_tasks():
-    return tasks, 201
+    tasks = Task.query.all()
+
+    tasklist = []
+
+    for task in tasks:
+        tasklist.append({
+            "id": task.id,
+            "task": task.task,
+            "status": task.status
+        })
+    return tasklist
 
 @main.post("/tasks/add")
 def add_tasks():
     data = request.get_json()
-    new_task = {
-        "id": len(tasks) + 1,
-        "task": data["task"],
-        "status": False
-    }
-    tasks.append(new_task)
-    return new_task, 201
+    new_task = Task()
+    new_task.task = data["task"]
+    db.session.add(new_task)
+    db.session.commit()
+    return {"message": "Tasks added successfully"}, 200
+    
 
-@main.get("/tasks/delete/<int:t_id>")
+@main.delete("/tasks/delete/<int:t_id>")
 def delete_task(t_id):
-    task = get_current_task(t_id)
-    if task is None:
-        return {"message": "No task found"}, 400
-    tasks.remove(task)
-    return {"message": "Task has been deleted"}, 201
+    tasks = Task.query.filter(Task.id ==t_id)
+    if tasks == None:
+        return{"message": "Task not found"}, 401
+    db.session.delete(tasks)
+    db.session.commit()
+    return {"message": "Task deleted successfully"}, 200
 
-@main.post("/task/edit/<int:task_id>")
+@main.put("/task/edit/<int:task_id>")
 def edit_task(task_id):
-    task = get_current_task(task_id)
+    task = Task.query.filter(Task.id == task_id).first()
     if task == None:
-        return {"message": "No tasks found"}, 400
-    data = request.get_json()
-    task["status"] = data.get("status", task["status"])
-    return task
+        return{
+            "message": "No tasks found"
+        }, 401
+    task.status = True
+    db.session.commit()
+    return {"message": "Task completed Successfully"}, 200
