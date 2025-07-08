@@ -1,0 +1,32 @@
+# Ignore .git directory
+.git
+
+# Ignore .gitignore file
+.gitignore
+
+# Ignore .dockerignore file
+.dockerignore
+
+# Ignore Python virtual environment directory
+.venv/
+
+# Ignore __pycache__ directories
+**/__pycache__/
+
+# Ignore .pyc files
+**/*.pyc
+
+# Ignore logs directory
+logs/
+
+# Ignore tmp directory
+tmp/
+
+# Ignore any .env files
+*.env
+
+# Ignore any .idea directory (if using IntelliJ IDEA)
+.idea/
+
+# Ignore any .vscode directory (if using Visual Studio Code)
+.vscode/
